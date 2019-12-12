@@ -1,17 +1,36 @@
 package com.example.pizzarecipe
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_recipe.view.*
 
-class PizzaAdapter(private val pizzaRecipes: List<PizzaRecipeItem>) : RecyclerView.Adapter<PizzaAdapter.PizzaViewHolder>() {
+class PizzaAdapter(private val pizzaRecipes: List<PizzaRecipeItem>, private val context: Context) : RecyclerView.Adapter<PizzaAdapter.PizzaViewHolder>() {
 
-    class PizzaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PizzaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener{
+                val pizza = pizzaRecipes[adapterPosition]
+                var intent = Intent(context,PizzaActivity::class.java)
+                intent.apply {
+                    putExtra("image",pizza.image)
+                    putExtra("title",pizza.title)
+                    putExtra("recipe",pizza.recipe)
+                }
+                context.startActivity(intent)
+            }
+
+        }
+
         val image = itemView.ivPizzaPhoto!!
         val title = itemView.tvTitle!!
         val recipe = itemView.tvRecipe!!
+
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PizzaViewHolder {
@@ -27,6 +46,6 @@ class PizzaAdapter(private val pizzaRecipes: List<PizzaRecipeItem>) : RecyclerVi
         var pizzaViewItem = pizzaRecipes[position]
         holder.image.setImageResource(pizzaViewItem.image)
         holder.title.text = pizzaViewItem.title
-        holder.recipe.text = pizzaViewItem.recipe
+        holder.recipe.text = pizzaViewItem.description
     }
 }

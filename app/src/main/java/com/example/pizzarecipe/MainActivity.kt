@@ -1,6 +1,7 @@
 package com.example.pizzarecipe
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,13 +31,19 @@ class MainActivity : AppCompatActivity() {
 
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PizzaAdapter(pizzaRecipes)
+        viewAdapter = PizzaAdapter(pizzaRecipes,this)
         recyclerView = findViewById(R.id.rvPizza)
         recyclerView.apply {
             layoutManager = viewManager
             setHasFixedSize(true)
             adapter = viewAdapter
         }
+
+
+
+
+
+
 
     }
 }
